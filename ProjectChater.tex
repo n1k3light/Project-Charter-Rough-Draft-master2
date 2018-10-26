@@ -1,0 +1,543 @@
+%Written by: Aaron Stillmaker
+%October 23, 2018
+%ECE 186A - Senior Design
+%
+%This is a template you can use for your Project Charter, though you will need to change a good portion of it for your own needs.
+\RequirePackage{filecontents}
+\begin{filecontents*}{reference.bib}
+	@misc{de1,
+	author			={Altera},
+	title			={{DE1-SoC Reference Manual}},
+	note			=	{http://www.ee.ic.ac.uk/pcheung/teaching/ee2digital/DE1SoCUsermanual.pdf,
+	}
+}
+	@misc{SM,
+	author			={Oyostepper},
+	title			={{23Hs22-2804S data sheet}},
+	note			=	{https://www.oyostepper.com/images/upload/File/23HS22-2804S.pdf,
+	}
+}
+	@misc{SMD,
+	author			={Leadshine Technology CO, Ltd},
+	title			={{DM542 User Manual}},
+	note			=	{http://robokits.download/datasheets/Leadshine%20DM542.pdf,
+	}
+}
+\end{filecontents*}
+
+\documentclass[12pt,onecolumn]{IEEEtran}			%Everything is default, except  which is journal, 10pt font, and final draft
+\usepackage{dtk-logos}						%This let me do the cool BibTeX logo, you shouldn't need this line. Add additional packages here:
+\usepackage{graphics}
+\usepackage{float}
+\usepackage{caption} 
+\usepackage[export]{adjustbox}
+
+%add packages here:
+
+\title{ \hfill  \vspace{2in} \\Smart Eraser \vspace{0.05in} }	
+
+%the \vspace is moving the title down from the top of the page
+\author{Project Charter \\ \vspace{0.6in}
+\vspace{12pt} 
+
+Heather Libecki - Chris Quesada - Juan Colin \\
+\vspace{5pt}
+Technical Advisor: Dr. Hovannes Kulhandjian	\\				%Note the \\ line returns to make sure to put each one on a new line
+\vspace{12pt} 								%I put in some space to get the due date listed a little lower
+Friday, October 26, 2018 \\ 
+\vspace{3.2in}
+ECE 186A - Senior Design I \\ 					%I am jamming all of the stuff I want on the title page into the Author spot, I know, this isn't elegant
+Fall 2018 - Dr. Aaron Stillmaker \\
+\vspace{5pt}
+California State University, Fresno \\
+Electrical and Computer Engineering Department \\ 
+
+\vspace{2in}								%You may need to mess with this space, this space is above the signature lines.
+
+
+\vspace{4in}}								%You will need to mess with this space, this space is after the signature lines.  The idea
+										%is to make the title page by itself.  I know, this isn't elegant either, but IEEE formatting doesn't
+										%make title pages
+
+\begin{document}
+
+
+\maketitle									%This generates the title from the information given above.
+\thispagestyle{empty}						%This removes the page number from the title page.
+\newpage
+\thispagestyle{empty}
+\tableofcontents
+
+\listoffigures
+
+\listoftables
+
+\newpage
+\thispagestyle{empty} 
+ \section*{Revision History}
+	Version 1 - finalized October 25, 2018. Changes made by: Heather Libecki, Chris Quesada, Juan Colin. \\
+	Changes made: the initial rough draft of the Project Charter was created, including the proper sections and figures specified by Dr. Stillmaker.
+ 
+ \section*{Abstract}
+
+ The Smart Eraser is a tool created with the express purpose of making the lives of teachers easier, by allowing them to utilize valuable class time in a productive way. It aims to assist teachers who write lengthy, involved examples on a whiteboard while lecturing on the material they want their students to understand. The Smart Eraser will erase the information written on the whiteboard at the teacher's will, allowing them to continue lecturing without wasting precious class time on erasing the board between examples. This will allow students to learn in an environment with less interruptions and distractions, resulting in improved overall focus and retention. \par
+ \setlength{\parindent}{2.5ex} The project itself, in the simplest terms, is an automatic whiteboard eraser with smart capabilities. The eraser will be on a tracking system that will allow it to cover the x-y plane of the whiteboard's surface, and it will move based on the instructions given to it by the microcontroller it is connected to. This microcontroller will have 4 push-buttons that will be programmed to do 1 of four activities: erase the board using smart processing, erase the entire board from top to bottom without smart processing, stop the eraser's movement in case of emergency, and reset the eraser’s current process in order to send it back to its stand-by position. A camera will be at a fixed location facing the board to allow the entire whiteboard's image to be recorded. The image recorded will go through an image-processing algorithm, which will accomplish one of two things: it will detect the presence of a person in front of the whiteboard, causing the eraser to stop in its tracks, or it will detect the markings on the board and translate their locations into coordinates. These coordinates will then be processed in an algorithm which will determine the shortest path that needs to be taken in order to erase all the markings. Finally, after all procedures are done, the eraser will return to it's stand-by position.
+ 
+\newpage
+\setcounter{page}{1}
+ \section{Introduction}
+ The purpose of the Smart Eraser is to allow class time to be utilized for learning. It will assist teachers who write lengthy, involved examples on a whiteboard while lecturing, by erasing the board in between examples while the teacher continues to lecture. This will allow students to learn in an environment with less interruptions and distractions, which will result in improved overall focus and retention of the information being taught. \par
+\setlength{\parindent}{2.5ex} The Smart Eraser, in the simplest terms, is an automatic whiteboard eraser. The main deliverable of this project will be an eraser which can move left-to-right on a track, and up-and-down on a linear motion system attached to the track. This system will be able to detect where markings are on a whiteboard through the use of a camera and an image-processing program. The camera will send the image of the whiteboard to a microcontroller which will process the image, detect where the markings are, and convert their locations to a coordinate system that the mechanical aspects of the eraser will be able to read. This coordinate system will essentially convert the locations of the markings into rotations of the stepper motors attached to the tracks, and this will allow the eraser to move. The eraser will then find the quickest route to erase all of the markings, using a sorting algorithm, before returning to its stand-by position. Finally, the eraser will be able to detect an obstruction in front of the whiteboard, specifically the presence of a person, through the use of the camera and motion-detection technology. This will check if there is a person moving in front of the whiteboard, and if there is, the result would be an immediate termination of the process the Smart Eraser was carrying out; this is to ensure the safety of those around the Smart Eraser while it is operating. The figure below shows the rough layout of the Smart Eraser, and the numbered arrows are explained below it.
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[max size={\textwidth}{\textheight}]{"Layout".png}
+	\caption{A rough layout of the final product}
+	\label{fig:GANTT186A}
+\end{figure}
+
+\begin{enumerate}
+	\item The linear motion system with the attached eraser. This will allow the eraser to move in the y-axis direction.
+	\item The tracking system attached above and below the whiteboard. This will allow the eraser to move in the x-axis direction.
+	\item The text that will be erased. The image of this text will be seen through the camera, and the text's location will be determined through the use of image-processing software within the DE1\_SoC microcontroller.
+	\item The DE1\_SoC microcontroller, which will contain the image-processing program, the information on how to move the stepper motors, and the motion-detection program.
+	\item The wires connecting the DE1\_SoC board to the stepper motors.
+	\item This arrow represents the flow of data from the camera that will be mounted across from the board, to the microcontroller for processing.
+	\item The camera that will be connected to the DE1\_SoC board through an Ethernet cable.
+	\item The stepper motors (as well as the PCB that will be made for their H-Bridge connections). \\
+\end{enumerate} \par
+
+
+\setlength{\parindent}{2.5ex} The microcontroller that will be controlling the entire system has four push-buttons which will be utilized in the following way: push-button 0 will erase the board using the smart processing method, push-button 1 will erase the entire board without using the smart processing method, push-button 2 will stop the eraser in the middle of whatever process it was performing until it is pressed again, allowing it to resume the process it was carrying out, or until push-button 3 is pressed, which will reset the system and send the eraser back to its stand-by position. \par
+\setlength{\parindent}{2.5ex} Heather Libecki is responsible for being the project manager of this project. She will be researching the DE1\_SoC microcontroller, its relevant components, the ARM assembly language it uses, and the GPIO pin connections it is capable of. She will also be researching the stepper motors, the drivers needed to operate them, and she will be contributing to the creation of the PCB for the H-bridges. Therefore, she will be in charge of all connections to the DE1\_SoC, as well as the connections between the stepper motors, their H-bridge PCBs and drivers, and the additional power needed to make them work properly. \par
+\setlength{\parindent}{2.5ex} Chris Quesada will be researching the ethernet communication between the DE1\_SoC and the camera, as well as the datasheet for the camera itself. He will also be researching the image processing program, how to implement it using the C programming language, and how this program will be able to run on the DE1\_SoC. He will then research the motion-detection program, as well as the algorithm for finding the quickest route to the markings on the board, with assistance from Heather. Therefore, he will be in charge of all interactions with the camera and its smart processing capabilities. \par
+\setlength{\parindent}{2.5ex} Juan Colin will be researching the SDRAM interface standards in order to save images from the camera to the DE1\_SoC. He will also Be researching the physical mechanical system, its required connections, and the power system that will need to be created in order to allow it to run properly. He will then need to configure the power system so the mobile parts of the project can move the way they are intended to, and he will also be assisting in the creation of the PCBs for the H-bridges that will be connected to the stepper motors. Therefore, he will be in charge of the entire physical mechanical system of the eraser. \par
+\setlength{\parindent}{2.5ex} During the project life cycle, there will also be multiple deliverables that will need to be completed and turned in to Dr. Stillmaker. These deliverables will be worked on by all three members of the team to ensure a consistent flow of information throughout all written documentation.
+ 
+ \section{Project Objectives and Success Criteria}
+ The description of the Smart Eraser in the Project Description section of this document specifies what the ideal final product will be, so within this section, the actual objectives of the Smart Eraser will be listed. \\ \par
+ \setlength{\parindent}{2.5ex}  Main Objectives
+ \begin{itemize}
+ \item Create a functioning mechanical system that allows the eraser to erase the entire whiteboard.
+ \item Create a coordinate system based on processed image to move eraser to specific markings.
+ \item Create an algorithm to sort the order in which the markings should erase to ensure the shortest path is taken.
+ \item Create a functioning Smart Eraser that erases detected markings in a timely manner.
+ \item Create an image processing program to detect said markings on the whiteboard.
+ \item Create a motion-detection program to check for people obstructing the whiteboard. \\
+ \end{itemize} \par
+
+\setlength{\parindent}{2.5ex} In this section, the specific criteria that need to be met in order to consider this project a success will be listed. These criteria will help those contributing to the completion of this project to be able to measure the actual success of the final product. There will be simple success criteria listed, as well as more ambitious success criteria that will describe an ideal version of this project, including additional features that could be added if there is a significant amount of extra time after accomplishing the simple success criteria. \\
+
+Simple success criteria
+\begin{itemize}
+\item The tracking system moves the eraser to all parts of the board
+Eraser erases the entire whiteboard with no smart processing (covers entire board)
+\item Image processing program converts abnormal color changes to array
+\begin{itemize}
+\item Array converts to location coordinates of the color changes
+\end{itemize}
+\item Coordinate system, in the form of stepper motor rotations, moves the eraser to a specific part of the board
+\item Camera connects to DE1\_SoC board, image from camera saves to microcontroller SDRAM memory
+\item Image processing program on DE1\_SoC works with camera to process images in real-time
+\item Location of markings found with camera via image processing convert to necessary coordinates for mechanical system to read
+\item Motion-detection program creates TRUE signal to be sent to microcontroller if large obstruction (a person) is in front of whiteboard, returns to FALSE when obstruction gone
+\item TRUE signal from motion-detection program halts the movement of the eraser, resumes the eraser’s process when FALSE signal received
+\item Push-buttons on DE1\_SoC perform specifications, stated in the Introduction section of this project charter, using interrupts \\
+\end{itemize}
+
+Ambitious success criteria
+\begin{itemize}
+\item Visual feedback on DE1\_SoC board’s LEDs, HEX display, or LCD screen on current process being performed by eraser
+\item Phone or tablet application shows a live feed of the whiteboard from the camera
+\begin{itemize}
+\item Application can send specific coordinates to the whiteboard in order to “pick and choose” what section of the board to erase
+\end{itemize}
+\item Attachable spray system applies whiteboard liquid cleaning solution to perform “full clean” of whiteboard
+\begin{itemize}
+\item Timer on DE1\_SoC tells eraser to perform a “full clean” during the night, when no one is using the classroom
+\end{itemize}
+\item Eraser can be raised off of the whiteboard surface and subsequently re-pressed on to the board as needed
+\item Smart Eraser patent
+\end{itemize}
+ 
+ 
+ \section{High-Level Requirements}
+The high-level requirements associated with the completion of this project are outlined in the following list. \par
+\setlength{\parindent}{2.5ex} The project should:
+\begin{itemize}
+\item Be completed with the outlined budget
+\item Be implementable within 2 semesters
+\item Be complex enough to warrant the title “senior design project”
+\item Have significant, roughly equal portions of the project be completed by each team member
+\item Utilize material learned in core and technical elective classes throughout our college careers
+\item Produce a deliverable that can be presented in the Senior Project Presentation Day event usually held in the Satellite Student Union building on campus
+\item Be able to be scaled to a bigger surface than the prototype
+\end{itemize}
+ 
+\section{Assumptions, Constraints, and Standards}
+Based on the preliminary research conducted on what information, components, and protocols will be useful to know for the completion of this project, the team members wrote a list of their strengths and weaknesses to show what they can each do, and what needs more work. The specific courses with the relevant information needed for this project are also listed. \\ \par
+\setlength{\parindent}{2.5ex} Heather Libecki
+\begin{itemize}
+	\item Strengths: programming (assembly, some verilog), DE1\_SoC programming, mathematics, debugging, circuit implementation, problem solving, technical writing, public speaking
+	\item Weaknesses: circuitry design, coding algorithms, power systems, PCB design \\ 
+\end{itemize} \par
+\setlength{\parindent}{2.5ex} Chris Quesada
+\begin{itemize}
+\item Strengths: programming (assembly, verilog), embedded systems, algorithms, brainstorming
+\item Weaknesses: circuitry design, mathematics, public speaking, ethernet capabilities \\ 
+\end{itemize} \par
+\setlength{\parindent}{2.5ex} Juan Colin
+\begin{itemize}
+\item Strengths: electrical systems, circuitry design, problem solving, power systems, public speaking/relations
+\item Weaknesses: programming (assembly, verilog), technical writing and spelling \\
+\end{itemize}
+
+Based on this list, the background information that will need to be further researched is: image processing programs, connecting physical devices for the track of the eraser, camera and DE1\_SoC connectivity, PCB design for the stepper motor H-bridges, and other research as necessary. A few possible constraints on the project are the budget funding, the additional power supply needed to make the more powerful stepper motors operate, and the power supply to the camera.
+
+The following list outlines the relevant courses and the material that will be used from them. \\
+\begin{itemize}
+	\item ECE 178 - Embedded Systems
+	\begin{itemize}
+		\item Development of algorithms, setting up and using interrupts with the microcontroller, interfacing with peripherals on the microcontroller
+	\end{itemize}
+	\item ECE 146 - Computer Networks
+	\begin{itemize}
+		\item Ethernet connection between systems and how data is transferred over link
+	\end{itemize}
+	\item ECE 90 - Principles of Electrical Circuits
+	\begin{itemize}
+		\item Developing the power scheme and parameters for the stepper motors and track system.
+		\end{itemize}
+	\item ECE 118 - Microprocessor Architecture and Programming
+	\begin{itemize}
+		\item Recursion programming and algorithms developed for shortest-tree path, determining how to store memory in DE1\_SoC, working with ARM processor, GPIO connections to DE1\_SoC, using stepper motors, H-bridge, and power supply to operate stepper motors with DE1\_SoC, programming push-buttons on DE1\_SoC
+	\end{itemize}
+	\item ECE 85 - Digital Logic Design
+	\begin{itemize}
+		\item Developing PCB for H-bridge connections, any state diagrams needed for logic between processes
+	\end{itemize}
+	\item ECE 106 - Switching Theory and Logical Design
+	\begin{itemize}
+		\item Developing flow charts and block diagrams of the overall system \\
+	\end{itemize}
+\end{itemize}
+
+More extensive research has also been done on specific parts of the project needed to allow the project to work as intended, and they are listed below.
+
+\subsection{Camera Ethernet Connectivity and Data Transfer}
+After further research, the original idea of connecting and powering the camera over an Ethernet connection needed to be modified a bit. In order for the camera to be powered through Ethernet, the connection needed to provide 48V to the camera. Since the DE1\_SoC can only supply a maximum of 5V to any external device, the camera will now be powered through the included 12V 1A power adapter. 
+\subsection{Data Storage}
+The images taken from the camera will need to be saved to the DE1\_SoC board in order to allow the image processing program to work on them. The SDRAM on the DE1\_SoC board will be utilized, using the load and store commands in the ARM programming language. The coordinate system that will need to be created from the marking locations will also be saved to the memory on the DE1\_SoC, as well as the program that connects the stepper motors to the system as well.
+\subsection{Image Processing Program Design}
+After receiving feedback, it was decided that it would be an easier route to abandon trying to interface with the DE1\_SoC through MATLAB. This was the initial plan due to MATLAB's extensive image processing libraries. However, it has been decided that C will be more beneficial when using the Altera Monitor program. Further research will be towards learning how to do image processing specifically in C and how detect marks on the whiteboard.
+\subsection{Translate Markings to Coordinate System (stepper motor rotations)}
+Through team collaboration, it was decided that each stepper motor rotation would represent one pixel length. This would be how a coordinate system can be developed. For example, if the image processing algorithm picks up at mark that is 56 pixels from the left of the image, and 178 pixels from the top of the image, this would result in 56 rotations to the right on the x-axis motor and 178 rotations down on the y-axis motor. Further research and configuration would needs to be done towards how many degrees of rotation of the stepper motor would represent 1 pixel length.
+\subsection{Stepper Motor System Design}
+The stepper motors themselves will have attachable components to a pulley system, which will move the components on the board. In order to move the stepper motors, specific drivers will need to be attached to them through an H-bridge. This H-bridge will be designed on a PCB in order to minimize odd connections and spaghetti wires in the final product.
+\subsection{Microcontroller Involvement}
+The push-buttons will be used to enable different functions of the system and use the HEX 7-seg displays as visual feedback for which actions is be carried out. The microcontroller will be the central hub where all components of the system interact.  
+\subsection{Shortest Path Algorithm}
+In order to find the shortest path between all marks detected by the image processing program, Dijkstra's algorithm will be applied to the array containing the translated image. This translated image will be contained in an array that represents the detected marks from the board. The algorithm will then start at the top left most mark and traverse the array to find the shortest path between all marks in the array.
+\subsection{Motion-Detection Program}
+Not much research has been looked into for this aspect of the project as it is one of the last items on the GANTT chart. It is assumed that some sort of image processing algorithm will be needed to detect rapid changes in pixels. More research will need to be done. \\
+
+\textit{Standards} \par
+\vspace{2pt}
+\setlength{\parindent}{2.5ex} The standards listed below will be followed while completing this project.
+\begin{itemize}
+	\item IEEE 802.3-2018 - IEEE Standard for Ethernet 
+	\begin{itemize}
+		\item Applies to the Ethernet connection we will be using
+	\end{itemize}
+	\item IEEE 1233-1996/Cor a-1998 - IEEE Guide for Developing System Requirements Specifications
+	\begin{itemize}
+		\item Applies to the development of our project
+	\end{itemize}	
+	\item ARM IHI 0042F Procedure Call Standard for the ARM Architecture
+	\begin{itemize}
+		\item Applies to the assembly language we will be using to code our project
+	\end{itemize}
+	\item IEEE Editorial Style Manual
+	\begin{itemize}
+		\item Standards to follow when writing this Project Charter and any other reports that will be written for this project
+	\end{itemize}
+	\item NEMA Standards Publication ICS 16 Motion/Position Control Motors, Controls, and Feedback Devices
+	\begin{itemize}
+		\item Applies to the stepper motors we will be using and their operation
+	\end{itemize}
+\end{itemize}
+ 
+\section{Project Description and Boundaries}
+Describe your project in detail in this section.  List out all of the major components, as well as all of the minor components underneath that.
+Explain all the major difficulties with the project.  
+List who your technical faculty advisor is, what their area of expertise is, and how
+you will use that expertise in your project.
+
+Here is where you should \textbf{include your block diagrams, flow charts, and circuit diagrams}.
+Each project should have multiple parts that need to communicate, so you need a diagram that shows the details
+of the names of the connections, the size of the busses, etc.  Those with programs, which I also believe is all,
+should have outlines of flowcharts for the programs that will be used in your project.
+
+\section{High-Level Risks}
+What are the risks associated with your project?  For most, there are power systems you must be concerned about,
+or moving parts, or a number of other possibilities.  List what these are, and how you are addressing keeping
+your project development safe.
+
+\pagebreak
+
+\section{Milestone Schedule}
+\setlength{\parindent}{5ex}
+\begin{table} [H]	
+	\normalsize
+	\centering
+	\begin{tabular}{|l|l|l|}
+		\hline
+		\multicolumn{1}{|c|}{\textbf{Member Assign.}} & \multicolumn{1}{|c|}{\textbf{Start-End Date}} & \multicolumn{1}{|c|}{\textbf{Description}} \\
+		\hline
+		All & 10/12-10/19/18 & Complete Smart Eraser Project Proposal to be submitted to DPS\\
+		& & Telecom for review. \\
+		\hline
+		All & 10/12-10/19/18 & Finalize the specifics of the budget. \\
+		\hline
+		All & 10/15-10/19/18 & 
+		Create the Project Charter rough draft to be turned in.\\
+		\hline
+		All & 10/16-10/26/18 & Draft a more detailed blueprint of the physical Smart Eraser \\
+		& & deliverable. \\
+		\hline
+		All & 10/16-10/26/18 & 
+		Revise the Project Description; complete for future reference.\\
+		\hline
+		All & 10/16-10/26/18 & 
+		Draft the flowchart to show the logical relationships between all \\
+		& & connected devices within the project.\\
+		\hline
+		All & 10/18-10/19/18 & 
+		Complete bi-monthly update presentation for Senior Design class.\\
+		\hline
+		Juan C. & 10/26-11/10/18 & 
+		Complete a block diagram detailing the specific connections between \\
+		& & the devices within the project.\\
+		\hline
+		Chris Q. & 10/26-11/15/18 & 
+		Research communication and protocols to be used.\\
+		\hline
+		Heather L. & 10/26-11/15/18 & 
+		Research the camera and how it will send data through the ethernet \\
+		& & cord.\\
+		\hline
+		All & 11/1-11/2/18 & 
+		Complete bi-monthly update presentation for Senior Design class.\\
+		\hline
+		Heather L. & 11/1-11/21/18 & 
+		Research the microcontroller to be used  (DE1-SoC).\\
+		\hline
+		Chris Q. & 11/1-11/21/18 & 
+		Research the image processing program and what programming \\
+		& & language to use.\\
+		\hline
+		Juan C. & 11/1-12/1/18 &
+		Research the mechanical system and the power connection it requires. \\
+		\hline
+		
+		All & 11/15-11/16/18 & Complete bi-monthly update presentation for Senior Design class.\\
+		\hline
+		Chris Q. & 11/15-11/25/18 & Test initial information found on image processing program.\\
+		\hline
+	\end{tabular} 
+\end{table}	
+
+\setlength{\parindent}{5ex}
+\begin{table} [H]	
+	\normalsize
+	\centering
+	\begin{tabular}{|l|l|l|}
+		\hline
+		\multicolumn{1}{|c|}{\textbf{Member Assign.}} & \multicolumn{1}{|c|}{\textbf{Start-End Date}} & \multicolumn{1}{|c|}{\textbf{Description}} \\
+		\hline
+		Heather L. & 11/15-11/25/18 & Test the microcontroller after researching the ports needed for the \\
+		& & project.\\
+		\hline
+		Heather L. & 11/20-12/1/18 & Research the coordinate system; converts pixels to stepper motor \\
+		& & rotations in the mechanical system.\\
+		\hline
+		All & 11/29-11/30/18 & 
+		Complete bi-monthly update presentation for Senior Design class.\\
+		\hline
+		All & 12/1-12/17/18 & 
+		Complete the final draft of the Project Charter.\\
+		\hline
+		All & 12/13-12/14/18 & 
+		Present Project Charter to Senior Design class, professor, and \\
+		& & academic advisor.\\
+		\hline
+	\end{tabular} 
+	\caption{Senior Design Semester 1 - Research Phase.}
+	\label{table:2}
+\end{table}	
+
+\setlength{\parindent}{5ex}
+\begin{table} [H]	
+	\normalsize
+	\centering
+	\begin{tabular}{|l|l|l|}
+		\hline
+		\multicolumn{1}{|c|}{\textbf{Member Assign.}} & \multicolumn{1}{|c|}{\textbf{Start-End Date}} & \multicolumn{1}{|c|}{\textbf{Description}} \\
+		\hline
+		Chris Q. & 1/1-1/20/19 & Develop the code for the image processing program. \\
+		\hline
+		Juan C. & 1/1-1/15/19 & Configure the power system for the mechanical parts of the Smart \\
+		& & Eraser. \\
+		\hline
+		Juan C. & 1/1-1/15/19 & Build the mechanical system the eraser will be attached to.\\
+		\hline
+		Heather L. & 1/15-2/15/19 & Develop the coordinate system. \\
+		\hline
+		Heather \& Chris & 1/15-1/30/19 & Develop the algorithm to determine the quickest path to erase markings \\
+		& & on the board.\\
+		\hline
+		All & 1/15-1/30/19 & Integrate the microcontroller with the mechanical system.\\
+		\hline
+		All & 1/20-1/30/19 & Test the newly formed microcontroller-mechanical system.\\
+		\hline
+		Heather L. & 2/1-2/10/19 & Connect the camera to the microcontroller ports.\\
+		\hline
+		Chris Q. & 2/1-2/25/19 & Test the image processing program with the camera.\\
+		\hline
+		Chris Q. & 2/25-3/25/19 & Create the motion-detecting program.\\
+		\hline
+		All & 3/26-4/15/19 & Integrate the motion-detecting program with the camera and \\
+		& & microcontroller-mechanical system.\\
+		\hline
+		All & 4/1/-4/20/19 & Test the motion-detecting program.\\
+		\hline
+		All & 4/20-5/13/19 & 
+		Add potential additional features to be decided upon at a later time (if \\
+		& & ahead of schedule).\\
+		\hline
+		All & 4/20-5/13/19 & 
+		Final Project Presentation.\\
+		\hline
+	\end{tabular} 
+	\caption{Senior Design Semester 2 - Implementation Phase.}
+	\label{table:3}
+\end{table}
+\section{Gantt Charts}
+\begin{figure}[h!]
+	\centering
+	\includegraphics[max size={\textwidth}{\textheight}]{"GANTT chart 186A 1".png}
+	\caption{GANTT chart for semester 1}
+	\label{fig:GANTT186A}
+\end{figure}
+
+\newpage
+
+\begin{figure}[h!]
+	\centering
+	{\includegraphics[max size={\textwidth}{\textheight}]{"GANTT chart 186B".png}}
+	\caption{GANTT chart for semester 2}
+	\label{fig:GANTT186B}
+\end{figure}
+
+\section{Equipment and Budget}
+\setlength{\parindent}{5ex}
+\begin{table} [H]
+	\normalsize
+	\centering
+	\begin{tabular}{|l|l|}
+		\hline
+		\multicolumn{1}{|c|}{\textbf{Component - Production Company}}  & \multicolumn{1}{|c|}{\textbf{Est. Price}} \\
+		\hline
+		DE1-Soc FPGA Development Board - Terasic & \$175 \\
+		\hline
+		CNC stepper motor driver - STEPPERONLINE & \$67.90 (\$33.95) \\
+		\hline
+		Carriage with Stainless Steel Balls; for use with 115RC Linear Tack - Accuride & \$67.16 (\$33.58 x2) \\ 
+		\hline 		
+		115RC 47in Linear Motion Aluminum Track Systems -Accuride & \$62.68 (\$31.34 x2) \\
+		\hline
+		Nema 23 CNC 2.8A Stepper Motor - STEPPERONLINE & \$52.00 (\$26.00) \\
+		\hline
+		1080p POE Camera - sv3c & \$38.99 \\
+		\hline
+		Dry Erase Board (prototype) 36" x 24" - VIZ-PRO & \$31.90 \\
+		\hline
+		Stepper Motor Encasing - D.Y Engineering & \$25.98 (\$12.99 X2) \\
+		\hline
+		5 Meter GT2 timing Belt (6mm width) - Mercury & \$17.98 (\$8.99 X2) \\
+		\hline
+		6.35mm GT2 40 Teeth Pulley Flange - uxcell & \$14.38 (\$7.19 X2) \\
+		\hline
+		Nema 23 Stepper Motor Steel Mount Bracket w/ Screws - HobbyUnlimited & \$10.99 \\
+		\hline
+		Dry Erase Whiteboard Block Eraser - Expo & \$8.90 \\
+		\hline
+		PCB for H Bridge (for Stepper Driver) and Stepper Motors, possible LCD screen & \ Unknown \\
+		\hline
+		Various Wires and Connection Cables & \ Unknown \\
+		\hline 
+		\textbf{Total Rough Budget} & \ \textbf{\$573.86} \\
+		\hline 
+	\end{tabular} 
+	\caption{Estimated costs of components for project}
+	\label{table:1}
+\end{table}	
+
+\pagebreak
+
+\section{Roles of Team Members}
+ Heather Libecki will be project manager of the Smart Eraser project. She has experience with programming the specific board (the DE1-SoC) that will be used in this project, as well as connecting physical devices to it and controlling them via the GPIO ports. This project will be dependent on translating data from the camera into information that the microcontroller will be able to process, and her previous experience with the board plus her ability to learn and adapt quickly will help in that implementation. She is adept at solving problems, debugging and error detection, and technical writing, which will be an integral part in the completion of this project. A solid understanding of the microcontroller full capabilities will need to be further ascertained, as well as how the coordinate system will work in conjunction with the stepper motors, which will be connected to the\par
+ \setlength{\parindent}{5ex}
+ Chris Quesada has experience in working with embedded systems and developing code for different applications. This project will be heavy on the software side, involving either C or assembly language to take in data, analyze it, and then send an output. So, someone versed in both programming and interfacing with microcontrollers will be needed. A good understanding of networking will also be needed, because an ethernet connection will be used as the medium between the camera and the microcontroller. He is developing a solid knowledge based on how to interact with networks which can be applied to configuring an interface to communicate with and read data from the camera, which will be used in the creation of the image processing program, as well as the motion detection program.\par
+ \setlength{\parindent}{5ex}
+ Juan Colin has experience in working with electrical systems, and physical circuit design. He is proficient in the use of problem solving techniques to create a functioning system with given design specifications. His part of the project will be dependent on learning the physical mechanical aspects of the design, and how the connected parts will be powered. Therefore, he will need to further his understanding of how the parts should be connected in order to ensure the most spatial efficiency, as well as the connection of the power system that will allow all parts of the system to work properly and move the way they need to.
+ 
+ 
+ \section{Stakeholder List}
+ \begin{enumerate}
+ 	\item	Dr. Aaron Stillmaker, Ph.D.: Management\\ 
+ 	\item   Dr. Hovannes Kulhandjian, Ph.D.: Technical Advisor\\
+ 	\item	DPS Telecom: Sponsor\\
+ 	\item	Heather Libecki: Project Manager\\
+	\item 	Juan Colin: team member\\
+ 	\item	Chris Quesada: team member\\
+ 	 	
+ \end{enumerate}
+ 
+ \section{Project Approval Requirements}
+ 
+ \pagebreak
+
+\section{Approvals}
+\setlength{\parindent}{15ex}
+	\begin{flushleft}
+	Signature: \hrulefill
+	
+	\hspace*{0mm}\phantom{Approved: }Heather Libecki - Project manager\\
+	\vspace{12pt}
+	Signature: \hrulefill
+	
+	\hspace*{0mm}\phantom{Approved: }Chris Quesada - Team member\\
+	\vspace{12pt}
+	Signature: \hrulefill
+	
+	\hspace*{0mm}\phantom{Approved: }Juan Colin - Team member\\
+	\vspace{12pt}
+	Signature: \hrulefill
+	
+	\hspace*{0mm}\phantom{Approved: }Hovannes Kulhandjian, Ph.D. -
+	 Technical advisor\\
+	 \vspace{12pt}
+	
+	Potentially DPS Telecom
+\end{flushleft}\par
+\newpage
+\cite{de1}
+\cite{SM}
+\cite{SMD}
+
+
+	\bibliographystyle{IEEEtran}
+	\bibliography{reference}	
+ 
+\end{document}
